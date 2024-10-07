@@ -3,37 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <title>Contador de Horas Lado Leste</title>
+    <title>Calculadora de Horas</title>
 </head>
 <body>
     <div class="container">
-        <h1>Contador de Horas Lado Leste</h1>
-        
+        <h1>Calculadora de Horas</h1>
+        <p class="developed">Desenvolvido por Caly</p>
+
         <div class="input-container">
             <input type="number" id="hours" placeholder="Horas" min="0">
-            <input type="number" id="minutes" placeholder="Minutos" min="0">
-            <input type="number" id="seconds" placeholder="Segundos" min="0">
-            <button id="addTime">Adicionar</button>
-            <button id="subtractTime">Subtrair</button>
-            <button id="clearHistory">Limpar</button>
+            <input type="number" id="minutes" placeholder="Minutos" min="0" max="59">
+            <input type="number" id="seconds" placeholder="Segundos" min="0" max="59">
         </div>
-        
-        <div class="output-container">
-            <h2>Tempo total: <span id="totalTime">0 horas, 0 minutos, 0 segundos</span></h2>
+
+        <div class="buttons">
+            <button id="add">Adicionar</button>
+            <button id="subtract">Subtrair</button>
+            <button id="clear">Limpar</button>
         </div>
+
+        <h2>Total: <span id="total">0h 0m 0s</span></h2>
 
         <div class="history-container">
-            <h3>Histórico:</h3>
-            <ul id="history"></ul>
+            <h3>Histórico</h3>
+            <div id="history" class="history"></div>
         </div>
-
-        <footer>
-            <p>Desenvolvido por Caly</p>
-        </footer>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

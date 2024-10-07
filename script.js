@@ -1,65 +1,87 @@
+let totalHours = 0;
+let totalMinutes = 0;
 let totalSeconds = 0;
-let historyList = [];
 
-document.getElementById('addTime').addEventListener('click', () => {
-    addTime(true);
+document.getElementById("add").addEventListener("click", function() {
+    addTime();
 });
 
-document.getElementById('subtractTime').addEventListener('click', () => {
-    addTime(false);
+document.getElementById("subtract").addEventListener("click", function() {
+    subtractTime();
 });
 
-// Adiciona evento de tecla "Enter" para somar
-document.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        addTime(true);
-    }
-});
-
-document.getElementById('clearHistory').addEventListener('click', () => {
+document.getElementById("clear").addEventListener("click", function() {
     clearAll();
 });
 
-function addTime(isAddition) {
-    const hours = parseInt(document.getElementById('hours').value) || 0;
-    const minutes = parseInt(document.getElementById('minutes').value) || 0;
-    const seconds = parseInt(document.getElementById('seconds').value) || 0;
-
-    const timeInSeconds = (hours * 3600) + (minutes * 60) + seconds;
-
-    if (isAddition) {
-        totalSeconds += timeInSeconds;
-        addToHistory(hours, minutes, seconds, 'adicionado');
-    } else {
-        totalSeconds -= timeInSeconds;
-        addToHistory(hours, minutes, seconds, 'subtraído');
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        addTime();
     }
+});
 
-    updateDisplay();
+function addTime() {
+    const hours = parseInt(document.getElementById("hours").value) || 0;
+    const minutes = parseInt(document.getElementById("minutes").value) || 0;
+    const seconds = parseInt(document.getElementById("seconds").value) || 0;
+
+    totalSeconds += seconds;
+    totalMinutes += minutes + Math.floor(totalSeconds / 60);
+    totalHours += hours + Math.floor(totalMinutes / 60);
+
+    totalSeconds %= 60;
+    totalMinutes %= 60;
+
+    updateTotal();
+    updateHistory(`Adicionado: ${hours}h ${minutes}m ${seconds}s`);
+    clearInputs();
+
+    // Retorna o foco para o campo de horas
+    document.getElementById("hours").focus();
 }
 
-function updateDisplay() {
-    const totalHours = Math.floor(totalSeconds / 3600);
-    const totalMinutes = Math.floor((totalSeconds % 3600) / 60);
-    const totalSec = totalSeconds % 60;
+function subtractTime() {
+    const hours = parseInt(document.getElementById("hours").value) || 0;
+    const minutes = parseInt(document.getElementById("minutes").value) || 0;
+    const seconds = parseInt(document.getElementById("seconds").value) || 0;
 
-    document.getElementById('totalTime').innerText = `${totalHours} horas, ${totalMinutes} minutos, ${totalSec} segundos`;
-}
+    totalSeconds -= seconds;
+    totalMinutes -= minutes + Math.floor(totalSeconds / 60);
+    totalHours -= hours + Math.floor(totalMinutes / 60);
 
-function addToHistory(hours, minutes, seconds, operation) {
-    const historyEntry = `${hours} horas, ${minutes} minutos, ${seconds} segundos ${operation}.`;
-    historyList.push(historyEntry);
+    totalSeconds = Math.max(totalSeconds, 0);
+    totalMinutes = Math.max(totalMinutes, 0);
+    totalHours = Math.max(totalHours, 0);
 
-    const historyElement = document.createElement('li');
-    historyElement.textContent = historyEntry;
-    document.getElementById('history').appendChild(historyElement);
+    updateTotal();
+    updateHistory(`Subtraído: ${hours}h ${minutes}m ${seconds}s`);
+    clearInputs();
+
+    // Retorna o foco para o campo de horas
+    document.getElementById("hours").focus();
 }
 
 function clearAll() {
+    totalHours = 0;
+    totalMinutes = 0;
     totalSeconds = 0;
-    document.getElementById('totalTime').innerText = '0 horas, 0 minutos, 0 segundos';
-    document.getElementById('history').innerHTML = ''; // Limpa o histórico
-    document.getElementById('hours').value = ''; // Limpa o campo de horas
-    document.getElementById('minutes').value = ''; // Limpa o campo de minutos
-    document.getElementById('seconds').value = ''; // Limpa o campo de segundos
+    updateTotal();
+    document.getElementById("history").innerHTML = '';
+}
+
+function updateTotal() {
+    document.getElementById("total").textContent = `${totalHours}h ${totalMinutes}m ${totalSeconds}s`;
+}
+
+function updateHistory(entry) {
+    const historyDiv = document.getElementById("history");
+    const newEntry = document.createElement("div");
+    newEntry.textContent = entry;
+    historyDiv.prepend(newEntry); // Adiciona no topo do histórico
+}
+
+function clearInputs() {
+    document.getElementById("hours").value = '';
+    document.getElementById("minutes").value = '';
+    document.getElementById("seconds").value = '';
 }

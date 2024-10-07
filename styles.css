@@ -1,57 +1,88 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: 'Figtree', sans-serif;
-    background-color: #2c2c2c;
+    background-color: #121212;
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    margin: 0;
+    padding: 20px;
 }
 
 .container {
+    max-width: 600px;
+    margin: auto;
+}
+
+h1 {
     text-align: center;
 }
 
-.input-container {
-    margin: 20px 0;
+.developed {
+    text-align: center;
+    margin: 5px 0 20px; /* Espaçamento entre o título e os campos de preenchimento */
 }
 
-input {
-    width: 80px;
+.logo {
+    display: block;
+    margin: 10px auto; /* Centraliza o logotipo */
+    max-width: 80%; /* Tamanho do logotipo ajustado para não sobrecarregar */
+    height: auto; /* Mantém a proporção do logotipo */
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+input[type="number"] {
+    width: 25%; /* Campos de preenchimento mais estreitos */
     padding: 10px;
-    margin: 0 5px;
-    border: 1px solid #fff;
-    background-color: #444;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
     color: white;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center; /* Centraliza os botões */
+    margin-bottom: 20px;
 }
 
 button {
     padding: 10px 15px;
+    margin: 0 5px; /* Margem lateral uniforme */
     border: none;
-    background-color: #5c5c5c;
+    border-radius: 5px;
     color: white;
     cursor: pointer;
-    margin: 0 5px;
+}
+
+#add {
+    background-color: #28a745; /* Verde para o botão Adicionar */
+}
+
+#subtract {
+    background-color: #dc3545; /* Vermelho para o botão Subtrair */
+}
+
+#clear {
+    background-color: #007bff; /* Azul para o botão Limpar */
 }
 
 button:hover {
-    background-color: #777;
-}
-
-.output-container {
-    margin: 20px 0;
+    opacity: 0.8; /* Efeito de hover */
 }
 
 .history-container {
-    margin: 20px 0;
+    margin-top: 20px;
+    max-height: 200px; /* Tamanho fixo da caixa de histórico */
+    overflow-y: auto; /* Rola se exceder a altura */
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-footer {
-    margin-top: 40px;
+.history {
+    display: flex;
+    flex-direction: column;
 }
